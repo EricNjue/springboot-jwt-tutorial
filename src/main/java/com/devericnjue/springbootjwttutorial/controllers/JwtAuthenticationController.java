@@ -3,6 +3,7 @@ package com.devericnjue.springbootjwttutorial.controllers;
 import com.devericnjue.springbootjwttutorial.config.JwtTokenUtil;
 import com.devericnjue.springbootjwttutorial.model.JwtRequest;
 import com.devericnjue.springbootjwttutorial.model.JwtResponse;
+import com.devericnjue.springbootjwttutorial.model.UserDTO;
 import com.devericnjue.springbootjwttutorial.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,13 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(user));
+    }
+
 
     private void authenticate(String username, String password) throws Exception {
         try {
